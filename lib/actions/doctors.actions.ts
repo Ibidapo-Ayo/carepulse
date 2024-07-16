@@ -1,7 +1,7 @@
 "use server"
 
 import { ID, Query } from "node-appwrite"
-import { DATABASE_ID, databases, DOCTOR_COLLECTION_ID, storage } from "../appwrite.config"
+import { databases, storage } from "../appwrite.config"
 import { revalidatePath } from "next/cache"
 import { InputFile } from "node-appwrite/file"
 import { CreateDoctorParams } from "@/types"
@@ -17,8 +17,8 @@ export const createDoctor = async ({ image, ...value }: CreateDoctorParams) => {
             file = await storage.createFile(process.env.NEXT_PUBLIC_BUCKET_ID!, ID.unique(), inputFile)
         }
         const newDoctor = await databases.createDocument(
-            DATABASE_ID!,
-            DOCTOR_COLLECTION_ID!,
+            process.env.DATABASE_ID!,
+            process.env.DOCTOR_COLLECTION_ID!,
             ID.unique(),
             {
                 name: value.name,
