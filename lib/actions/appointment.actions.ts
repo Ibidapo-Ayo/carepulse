@@ -1,15 +1,16 @@
 "use server";
 
 import { ID, Query } from "node-appwrite"
-import { APPOINTMENT_COLLECTION_ID, DATABASE_ID, databases } from "../appwrite.config"
+import { databases } from "../appwrite.config"
 import { Appointment } from "@/types/appwrite.types"
 import { revalidatePath } from "next/cache"
+import { CreateAppointmentParams, UpdateAppointmentParams } from "@/types";
 
 export const createAppointment = async (appointment: CreateAppointmentParams) => {
     try {
         const newAppointment = await databases.createDocument(
-            DATABASE_ID!,
-            APPOINTMENT_COLLECTION_ID!,
+            process.env.DATABASE_ID!,
+            process.env.APPOINTMENT_COLLECTION_ID!,
             ID.unique(),
             { ...appointment }
         )
@@ -21,8 +22,8 @@ export const createAppointment = async (appointment: CreateAppointmentParams) =>
 
 export const getAppointment = async (appointmentId: string) => {
     try {
-        const appointment = await databases.getDocument(DATABASE_ID!,
-            APPOINTMENT_COLLECTION_ID!,
+        const appointment = await databases.getDocument(process.env.DATABASE_ID!,
+            process.env.APPOINTMENT_COLLECTION_ID!,
             appointmentId
         )
         return appointment
@@ -34,8 +35,8 @@ export const getAppointment = async (appointmentId: string) => {
 
 export const getRecentAppointmentList = async () => {
     try {
-        const appointments = await databases.listDocuments(DATABASE_ID!,
-            APPOINTMENT_COLLECTION_ID!,
+        const appointments = await databases.listDocuments(process.env.DATABASE_ID!,
+            process.env.APPOINTMENT_COLLECTION_ID!,
             [Query.orderDesc('$createdAt')]
         )
 
@@ -72,8 +73,8 @@ export const getRecentAppointmentList = async () => {
 export const updateAppointment = async ({ appointmentId, userId, appointment, type }: UpdateAppointmentParams) => {
     try {
         const updatedAppointment = await databases.updateDocument(
-            DATABASE_ID,
-            APPOINTMENT_COLLECTION_ID,
+            process.env.DATABASE_ID!,
+            process.env.APPOINTMENT_COLLECTION_ID!,
             appointmentId,
             appointment
         )
