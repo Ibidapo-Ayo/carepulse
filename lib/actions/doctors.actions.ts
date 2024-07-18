@@ -5,7 +5,6 @@ import { databases, storage } from "../appwrite.config"
 import { revalidatePath } from "next/cache"
 import { InputFile } from "node-appwrite/file"
 import { CreateDoctorParams } from "@/types"
-import { Doctor } from "@/types/appwrite.types"
 
 export const createDoctor = async ({ image, ...value }: CreateDoctorParams) => {
     try {

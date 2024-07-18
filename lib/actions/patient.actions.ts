@@ -1,4 +1,5 @@
 "use server"
+
 import { ID, Query } from "node-appwrite"
 import {databases, storage, users } from "../appwrite.config"
 import { InputFile } from "node-appwrite/file"
@@ -13,9 +14,10 @@ export const createUser = async (user: CreateUserParams) => {
             const documents = await users.list([
                 Query.equal("email", [user.email])
             ])
-
+            
             return documents?.users[0]
         }
+        console.log(error)
     }
 }
 
@@ -64,4 +66,5 @@ export const registerPatient = async ({ identificationDocument, ...patient }: Re
     } catch (error) {
         console.log(error)
     }
-}   
+} 
+  

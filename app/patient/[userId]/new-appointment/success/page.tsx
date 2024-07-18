@@ -7,11 +7,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import React from 'react'
-
+     import * as Sentry from "@sentry/nextjs"        
+import { SearchParamProps } from '@/types'
+import { getUser } from '@/lib/actions/patient.actions'
 const SuccessPage = async ({ params: { userId }, searchParams }: SearchParamProps) => {
     const appointmentId = (searchParams?.appointmentId as string) || ""
     const appointment = await getAppointment(appointmentId!)
     const doctor = Doctors.find((doc) => doc.name === appointment!.primaryPhysician)
+    const user = await getUser(userId)
+  Sentry.metrics.set("user_view_appointment-sucess", user!.name)
     return (
         <div className='flex h-screen max-h-screen px-[5%]'>
             <div className='success-img'>
@@ -20,7 +24,7 @@ const SuccessPage = async ({ params: { userId }, searchParams }: SearchParamProp
                 </Link>
 
                 <section className='flex flex-col items-center'>
-                    <Image src={'/assets/gifs/success.gif'} height={300} width={280} alt="success" />
+                    <Image src={ '/assets/gifs/success.gif'} height={300} width={280} alt="success" />
                     <h2 className='header mb-6 max-w-[600px] text-center'>
                         Your <span className='text-green-500'>appointment request</span> has been successfully submitted!
                     </h2>

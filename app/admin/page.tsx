@@ -7,7 +7,6 @@ import React from 'react'
 import { AppointmentColums, DoctorsColumns } from '@/components/table/columns'
 import DoctorsModal from '@/components/DoctorsModal'
 import { getDoctors } from '@/lib/actions/doctors.actions'
-import Tab from '@/components/tabs/Tab'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 

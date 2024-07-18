@@ -16,9 +16,14 @@ import { Label } from "../ui/label"
 import { SelectItem } from "../ui/select"
 import Image from "next/image"
 import FileUploader from "../FileUploader"
+import { CreateDoctorParams, User } from "@/types"
+import { Doctor } from "@/types/appwrite.types"
 
 
-const RegisterForm = ({ user }: any) => {
+const RegisterForm = ({ user, doctor }: {
+    user: any,
+    doctor: any
+}) => {
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
 
@@ -191,12 +196,12 @@ const RegisterForm = ({ user }: any) => {
                     placeholder="Select Primary Physician"
                     label="Primary Physician"
                 >
-                    {Doctors.map((doctor) => {
+                    {doctor.map((doc: CreateDoctorParams) => {
                         return (
-                            <SelectItem value={doctor.name} key={doctor.name}>
+                            <SelectItem value={doc.name} key={doc.name}>
                                 <div className="flex cursor-pointer items-center gap-2">
-                                    <Image src={doctor.image} width={32} height={32} alt={doctor.name} className="rounded-full border border-dark-500" />
-                                    <p>{doctor.name}</p>
+                                    <Image src={`${doc.image}`} width={32} height={32} alt={doc.name} className="rounded-full border border-dark-500" />
+                                    <p>{doc.name}</p>
                                 </div>
                             </SelectItem>
                         )

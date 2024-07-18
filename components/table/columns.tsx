@@ -109,7 +109,7 @@ export const DoctorsColumns: ColumnDef<Doctor>[] = [
         header: "Profile",
         cell: ({ row }) => <div className="flex items-center gap-3 ">
             <Image
-                src={row.original.image}
+                src={`${row.original.image}`}
                 alt={row.original.name}
                 width={100}
                 height={100}
